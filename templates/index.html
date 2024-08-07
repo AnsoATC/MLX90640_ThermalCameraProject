@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thermal Camera</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Real-time Thermal Camera Feed</h1>
+        <div class="control-panel">
+            <div class="form-group">
+                <label for="colormap">Select Colormap:</label>
+                <select name="colormap" id="colormap">
+                    {% for cmap in colormaps %}
+                        <option value="{{ cmap }}" {% if cmap == current_colormap %}selected{% endif %}>{{ cmap }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="checkbox" id="filterCheckbox" name="filterCheckbox">
+                <label for="filterCheckbox">Filtering</label>
+            </div>
+        </div>
+        <div class="image-container">
+            <div class="tooltip" id="temperature">
+                Temperature: <span id="temp-value"></span> °C
+            </div>
+            <img id="videoFeed" src="{{ url_for('video_feed') }}" alt="Thermal Image">
+        </div>
+        <div class="heatmap-legend-container">
+            <img id="heatmapLegendImg" src="{{ url_for('static', filename=current_colormap+'_legend.png') }}" alt="Heatmap Legend">
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
+
